@@ -33,7 +33,7 @@ const removeFrom_session = (req, res) => {
   const playPosition = req.playPosition;
   const snapshotId = req.snapshotId;
 
-  spotifyApi.removeTracksFromPlaylistByPosition(playlistID,[]), snapshotID);
+  spotifyApi.removeTracksFromPlaylistByPosition(playlistID,[], snapshotID);
 }
 
 
