@@ -5,24 +5,11 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 const { URLSearchParams } = require('url');
 
+import generateRandomString from './helpers'
+
 var client_id = '4cecfbc846464e938d975ba8f44081ad'; // Your client id
 var client_secret = '359d887e40fc4fdcbc09989155cc08cb'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
-
-/**
- * Generates a random string containing numbers and letters
- * @param  {number} length The length of the string
- * @return {string} The generated string
- */
-var generateRandomString = function(length) {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
 
 var stateKey = 'spotify_auth_state';
 
@@ -50,6 +37,8 @@ app.get('/login', function(req, res) {
       state: state
     }));
 });
+
+app.get('/sessions', sessions)
 
 app.get('/callback', function(req, res) {
 
