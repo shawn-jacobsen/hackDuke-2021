@@ -19,7 +19,16 @@ const new_session = (req, res) => {
 const kill_session = (req, res) => {
 }
 
-const update_session = (req, res) => {
+const addTo_session = (req, res) => {
+  var playlistID = req.playlistId;
+  var playPosition = req.playPosition;
+}
+
+const removeFrom_session = (req, res) => {
+  var playlistID = req.playlistId;
+  var playPosition = req.playPosition;
+}
+const reorder_session = (req, res) => {
   var playlistID = req.playlistId;
   var playPosition = req.playPosition;
 }
@@ -39,7 +48,9 @@ const get_session = (req, res) => {
 
 router.get('/new', new_session);
 router.get('/kill', kill_session);
-router.get('/update', update_session);
 router.get('/current', get_session);
+router.get('/add', addTo_session);
+router.get('/remove', removeFrom_session);
+router.get('/reorder', reorder_session);
 
-module.exports = {router, new_session, kill_session, update_session};
+module.exports = {router, new_session, kill_session, update_session, addTo_session, removeFrom_session, reorder_session};
