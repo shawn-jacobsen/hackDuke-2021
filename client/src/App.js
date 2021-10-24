@@ -1,42 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import Axios from 'axios';
 import QueueItem from './Components/QueueItem';
 
-const Song1 =  {
-  id: "1",
-  name: "test song ",
-  rating: 3
-}
+const Song1 = { id: "1", name: "test song ", rating: 32 }
+const Song2 = { id: "2", name: "test song ", rating: 55 }
+const Song3 = { id: "3", name: "test song ", rating: 51 }
+const Song4 = { id: "4", name: "test song ", rating: 21 }
 
-const Song2 =  {
-  id: "2",
-  name: "test song ",
-  rating: 55
-}
-
-const Song3 =  {
-  id: "3",
-  name: "test song ",
-  rating: 51
-}
-
-const Song4 =  {
-  id: "4",
-  name: "test song ",
-  rating: 2
-}
-
-const Songs = [
-  Song1,
-  Song2,
-  Song3,
-  Song4
-]
+const Songs = [ Song1, Song2, Song3, Song4 ]
 
 function App() {
-  const [songQueue, setSongQueueQueue] = useState(Songs);
+  const [songQueue, setSongQueue] = useState([]);
+
+  useEffect(() => {
+    Axios({
+      method: "GET",
+      url: "http://localhost:8888/sessions/current",
+    }).then((res) => setSongQueue(res.data.queue));
+  });
 
   function handleOnDragEnd(result) {
     console.log(result);
@@ -46,7 +30,15 @@ function App() {
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    setSongQueueQueue(items);
+    Axios({
+      data: {
+        
+      },
+      method: "GET",
+      url: "http://localhost:8888/sessions/reorder",
+    }).then((res) => setSongQueue(res.data.queue));
+
+    setSongQueue(items);
   }
 
   return (
