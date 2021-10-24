@@ -6,7 +6,7 @@ function QueueItem(props) {
       <p className="song-name">{props.Name}</p>
       <p className="song-rating">Rating: {props.Rating}</p>
       <p className="song-rating">{props.Rating}</p>
-      <p className="song-drag"><span class="material-icons">drag_indicator</span></p>
+      <p className="song-drag"><span className="material-icons">drag_indicator</span></p>
     </div>
   );
 }

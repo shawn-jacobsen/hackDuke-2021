@@ -4,64 +4,74 @@ import './App.css';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import QueueItem from './Components/QueueItem';
 
-const Song =  {
+const Song1 =  {
+  id: "1",
   name: "test song ",
-  rating: 5
+  rating: 3
+}
+
+const Song2 =  {
+  id: "2",
+  name: "test song ",
+  rating: 55
+}
+
+const Song3 =  {
+  id: "3",
+  name: "test song ",
+  rating: 51
+}
+
+const Song4 =  {
+  id: "4",
+  name: "test song ",
+  rating: 2
 }
 
 const Songs = [
-  Song,
-  Song,
-  Song,
-  Song
+  Song1,
+  Song2,
+  Song3,
+  Song4
 ]
 
 function App() {
-  const [queue, updateQueue] = useState(Songs);
+  const [songQueue, setSongQueueQueue] = useState(Songs);
 
   function handleOnDragEnd(result) {
+    console.log(result);
     if (!result.destination) return;
 
-    const items = Array.from(queue);
+    const items = Array.from(songQueue);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    updateQueue(items);
+    setSongQueueQueue(items);
   }
 
   return (
     <div className="App">
-      <h1><span class="material-icons">audiotrack</span>Party Play</h1>
+      <h1><span className="material-icons">audiotrack</span>Party Play</h1>
       <div className="song-list">
-        {queue.map((song, i) => {
-          return <QueueItem Name={song.name + i} Rating={song.rating}/>
-        })}
+        <DragDropContext onDragEnd={handleOnDragEnd}>
+            <Droppable droppableId="songs">
+              {(provided) => (
+                <ul className="song-list" {...provided.droppableProps} ref={provided.innerRef}>
+                  {songQueue.map(({id, name, rating}, index) => {
+                    return (
+                      <Draggable key={id} draggableId={id} index={index}>
+                        {(provided) => (
+                          <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}><QueueItem Name={name} Rating={rating} /></li>
+                        )}
+                      </Draggable>
+                    );
+                  })}
+                  {provided.placeholder}
+                </ul>
+              )}
+            </Droppable>
+          </DragDropContext>
       </div>
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Droppable droppableId="songs">
-            {(provided) => (
-              <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
-                {characters.map(({id, name, thumb}, index) => {
-                  return (
-                    <Draggable key={id} draggableId={id} index={index}>
-                      {(provided) => (
-                        <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                          <div className="characters-thumb">
-                            <img src={thumb} alt={`${name} Thumb`} />
-                          </div>
-                          <p>
-                            { name }
-                          </p>
-                        </li>
-                      )}
-                    </Draggable>
-                  );
-                })}
-                {provided.placeholder}
-              </ul>
-            )}
-          </Droppable>
-        </DragDropContext>
     </div>
   );
 }
