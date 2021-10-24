@@ -3,9 +3,7 @@ var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
-const { URLSearchParams } = require('url');
-
-import generateRandomString from './helpers'
+import sessions from './sessions'
 
 var client_id = '4cecfbc846464e938d975ba8f44081ad'; // Your client id
 var client_secret = '359d887e40fc4fdcbc09989155cc08cb'; // Your secret
@@ -56,22 +54,7 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-app.get('/startSession', function(req, res){
-    var 
-});
-
-app.get('/updateSession', function(req, res){
-    var playlistID = req.playlistId;
-    var playPosition = req.playPosition;
-
-
-
-
-});
-
-app.get('/endSession', function(req, res){
-    
-});
+app.get('session', sessions);
 
 console.log('Listening on 8888');
 app.listen(8888);
