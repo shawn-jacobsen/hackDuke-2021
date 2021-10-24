@@ -1,17 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const accountController = require('../controllers/accountController');
-import generateRandomString from './helpers'
+const {generateRandomString} = require('./helpers');
+
 
 // SESSION HANDLING
 
-sessions = []
-
-// ROUTING
-
-router.get('/new', new_session);
-router.get('/kill', kill_session);
-router.get('/update', update_session);
 const new_session = (req, res) => {
   const sessionId = generateRandomString(15);
   result = "/session/" + sessionId;
@@ -31,6 +24,10 @@ const update_session = (req, res) => {
   var playPosition = req.playPosition;
 }
 
+// ROUTING
 
+router.get('/new', new_session);
+router.get('/kill', kill_session);
+router.get('/update', update_session);
 
-module.exports = router;
+module.exports = {router, new_session, kill_session, update_session};
