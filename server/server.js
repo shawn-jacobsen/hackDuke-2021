@@ -10,7 +10,6 @@ const {
   router:sessionRoutes,
   new_session, 
   kill_session,
-  update_session
 } = require('./sessions');
 
 const app = express();
@@ -57,7 +56,7 @@ app.get('/login', function(req, res) {
   res.redirect(spotifyApi.createAuthorizeURL(scopes));
 });
 
-app.get('/sessions', sessionRoutes)
+app.use('/sessions', sessionRoutes)
 
 app.get('/callback', (req, res) => {
   const error = req.query.error;
@@ -87,7 +86,7 @@ app.get('/callback', (req, res) => {
         `Sucessfully retreived access token. Expires in ${expires_in} s.`
       );
 
-      res.redirect('/8000/host');
+      res.redirect('http://localhost:3000/host');
 
       setInterval(async () => {
         const data = await spotifyApi.refreshAccessToken();
@@ -103,32 +102,6 @@ app.get('/callback', (req, res) => {
       res.send(`Error getting Tokens: ${error}`);
     });
 });
-
-app.get('/refresh_token', function(req, res) {
-
-  // requesting access token from refresh token
-  var refresh_token = req.query.refresh_token;
-  var authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
-    form: {
-      grant_type: 'refresh_token',
-      refresh_token: refresh_token
-    },
-    json: true
-  };
-
-  request.post(authOptions, function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-      var access_token = body.access_token;
-      res.send({
-        'access_token': access_token
-      });
-    }
-  });
-});
-
-app.get('session', sessions);
 
 console.log('Listening on 8888');
 app.listen(8888);

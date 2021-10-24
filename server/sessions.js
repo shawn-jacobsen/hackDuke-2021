@@ -32,8 +32,6 @@ const removeFrom_session = (req, res) => {
   const playlistID = req.playlistId;
   const playPosition = req.playPosition;
   const snapshotId = req.snapshotId;
-
-  spotifyApi.removeTracksFromPlaylistByPosition(playlistID,[]), snapshotID);
 }
 
 
@@ -62,4 +60,4 @@ router.get('/add', addTo_session);
 router.get('/remove', removeFrom_session);
 router.get('/reorder', reorder_session);
 
-module.exports = {router, new_session, kill_session, update_session, addTo_session, removeFrom_session, reorder_session};
+module.exports = {router, new_session, kill_session, addTo_session, removeFrom_session, reorder_session};
