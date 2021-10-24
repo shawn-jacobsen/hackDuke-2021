@@ -18,28 +18,33 @@ const new_session = (req, res) => {
 };
 
 const kill_session = (req, res) => {
+
+  
 }
 
 const addTo_session = (req, res) => {
-  const playlistID = req.playlistId;
-  const trackURI = req.trackURI;
+  const playlistId = req.body.playlistId;
+  const trackURI = req.body.trackURI;
 
-  spotifyApi.addTracksToPlaylist(playlistID,[trackURI]);
+  spotifyApi.addTracksToPlaylist(playlistId,[trackURI]);
 
 }
 
 const removeFrom_session = (req, res) => {
-  const playlistID = req.playlistId;
-  const playPosition = req.playPosition;
-  const snapshotId = req.snapshotId;
+  const playlistId = req.body.playlistId;
+  const trackPos = req.body.trackPos;
+  const snapshotId = req.body.snapshotId;
 
-  spotifyApi.removeTracksFromPlaylistByPosition(playlistID,[], snapshotID);
+  spotifyApi.removeTracksFromPlaylistByPosition(playlistId,[trackPos], snapshotId);
 }
 
 
 const reorder_session = (req, res) => {
-  const playlistID = req.playlistId;
-  const playPosition = req.playPosition;
+  const playlistId = req.body.playlistId;
+  const trackPos = req.body.trackPos;
+  const newTrackPos = req.body.newTrackPos;
+
+  spotifyApi.reorderTracksInPlaylist(playlistId, trackPos, newTrackPos);
 }
 
 const get_session = (req, res) => {
